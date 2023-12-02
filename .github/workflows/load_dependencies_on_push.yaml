@@ -28,5 +28,6 @@ jobs:
         shell: Rscript {0}
         run: |
           options(repos = c(CRAN = 'https://cloud.r-project.org'))
+          options(pkgType = "binary")
           if (!requireNamespace("renv", quietly = TRUE)) install.packages("renv")
           renv::restore()
