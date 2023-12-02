@@ -9,6 +9,7 @@ mtcars_summary <- mtcars %>%
   summarise(mean_mpg = mean(mpg))
 
 #produce a basic visualisation
+#add a comment to test if gh action differs
 
 ggplot(mtcars_summary, aes(x = cyl, y = mean_mpg)) +
   geom_col()
