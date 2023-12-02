@@ -1,7 +1,7 @@
 on:
   push:
   
-env: ~/.local/share/renv
+env: ~/Library/Caches/org.R-project.R/R/renv
     
 name: load-dependencies-on-push
 
@@ -12,19 +12,10 @@ jobs:
     steps:
       - name: checkout the repo code
         uses: actions/checkout@v3
-      - name: cache packages
+      - name: Cache packages
         uses: actions/cache@v1
         with:
           path: ${{ env.RENV_PATHS_ROOT }}
           key: ${{ runner.os }}-renv-${{ hashFiles('**/renv.lock') }}
           restore-keys: |
             ${{ runner.os }}-renv-
-      
-      - name: restore packages
-        shell: Rscript {0}
-        run: |
-          if (!requireNamespace("renv", quietly = TRUE)) install.packages("renv")
-          renv::restore()
-      
-      - name: print completed
-        run: echo "Process completed."
