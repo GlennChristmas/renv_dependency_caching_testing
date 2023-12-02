@@ -2,7 +2,7 @@ on:
   push:
   
 env: 
- RENV_PATHS_ROOT:  ~/Library/Caches/org.R-project.R/R/renv
+ RENV_PATHS_ROOT: ~/.local/share/renv
     
 name: load-dependencies-on-push
 
