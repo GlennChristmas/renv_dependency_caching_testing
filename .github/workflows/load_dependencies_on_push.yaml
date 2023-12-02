@@ -27,6 +27,7 @@ jobs:
       - name: Install packages
         shell: Rscript {0}
         run: |
+          Sys.setenv(PKG_CPPFLAGS = "-I/usr/local/lib/R/site-library/testthat/include")
           options(repos = c(CRAN = 'https://cloud.r-project.org'))
           options(pkgType = "binary")
           if (!requireNamespace("renv", quietly = TRUE)) install.packages("renv")
