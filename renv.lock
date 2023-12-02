@@ -183,17 +183,6 @@
       ],
       "Hash": "ac5c6baf7822ce8732b343f14c072c4d"
     },
-    "isoband": {
-      "Package": "isoband",
-      "Version": "0.2.4",
-      "Source": "Repository",
-      "Repository": "CRAN",
-      "Requirements": [
-        "grid",
-        "utils"
-      ],
-      "Hash": "b2008df40fb297e3fef135c7e8eeec1a"
-    },
     "labeling": {
       "Package": "labeling",
       "Version": "0.4.2",
