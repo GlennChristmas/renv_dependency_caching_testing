@@ -1,0 +1,35 @@
+on:
+  push:
+  
+env: 
+ RENV_PATHS_ROOT: ~/.local/share/renv
+    
+name: load-dependencies-on-push
+
+jobs:
+  checkout-and-load-dependencies:
+    runs-on: ubuntu-latest
+    
+    steps:
+      - name: checkout the repo code
+        uses: actions/checkout@v3
+      - name: set up R
+        uses: r-lib/actions/setup-r@v2
+        with:
+          r-version: '4.0.5'
+
+      - name: Cache packages
+        uses: actions/cache@v3
+        with:
+          path: ${{ env.RENV_PATHS_ROOT }}
+          key: ${{ runner.os }}-renv-${{ hashFiles('**/renv.lock') }}
+          restore-keys: |
+            ${{ runner.os }}-renv-
+      - name: Install packages
+        shell: Rscript {0}
+        run: |
+          Sys.setenv(PKG_CPPFLAGS = "-I/usr/local/lib/R/site-library/testthat/include")
+          options(repos = c(CRAN = 'https://cloud.r-project.org'))
+          options(pkgType = "binary")
+          if (!requireNamespace("renv", quietly = TRUE)) install.packages("renv")
+          renv::restore()
