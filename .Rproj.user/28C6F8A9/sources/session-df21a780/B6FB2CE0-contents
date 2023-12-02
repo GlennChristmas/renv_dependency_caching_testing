@@ -1,0 +1,30 @@
+on:
+  push:
+  
+env: ~/.local/share/renv
+    
+name: load-dependencies-on-push
+
+jobs:
+  checkout-and-load-dependencies:
+    runs-on: ubuntu-latest
+    
+    steps:
+      - name: checkout the repo code
+        uses: actions/checkout@v3
+      - name: cache packages
+        uses: actions/cache@v1
+        with:
+          path: ${{ env.RENV_PATHS_ROOT }}
+          key: ${{ runner.os }}-renv-${{ hashFiles('**/renv.lock') }}
+          restore-keys: |
+            ${{ runner.os }}-renv-
+      
+      - name: restore packages
+        shell: Rscript {0}
+        run: |
+          if (!requireNamespace("renv", quietly = TRUE)) install.packages("renv")
+          renv::restore()
+      
+      - name: print completed
+        run: echo "Process completed."
